@@ -28,33 +28,33 @@ public class FriendsRepositoryUnitTest {
     }
 
     @Test(groups = {"unit"})
-    public void test_getFriends_calledWithNoBidirectionalRelationShip_returnEmptyList() throws SocialNetWorkWrapperException, QueryException {
-        List<Long> followers = Arrays.asList(new Long("516478373"), new Long("863434009048739840"), new Long("1710537350"), new Long("92586914"), new Long("821409222399262721"), new Long("3796287012"), new Long("249619704"));
+    public void test_getUsersConnected_calledWithNoBidirectionalRelationShip_returnEmptyList() throws SocialNetWorkWrapperException, QueryException {
+        List<String> followers = Arrays.asList("516478373", "863434009048739840", "1710537350", "92586914", "821409222399262721", "3796287012","249619704");
 
-        List<Long> friends = Arrays.asList(new Long("31676814"), new Long("360557311"), new Long("4265275695"), new Long("2794858065"), new Long("767660573299449856"));
-        List<Long> expected = new ArrayList<Long>();
-        exerciseGetFriendsAndVerify(followers, friends, expected);
+        List<String> friends = Arrays.asList("31676814", "360557311", "4265275695", "2794858065", "767660573299449856");
+        List<String> expected = new ArrayList<String>();
+        exerciseGetUsersConnectedAndVerify(followers, friends, expected);
     }
     
 
     @Test(groups = {"unit"})
-    public void test_getFriends_calledWithSomeBidirectionRelationShip_returnListWithPeopleThatIsMemberOfTwoLists() throws SocialNetWorkWrapperException, QueryException {
-        List<Long> followers = Arrays.asList(new Long("516478373"), new Long("863434009048739840"), new Long("1710537350"), new Long("92586914"), new Long("767660573299449856"), new Long("3796287012"), new Long("249619704"));
-        List<Long> friends = Arrays.asList(new Long("31676814"), new Long("516478373"), new Long("4265275695"), new Long("1710537350"), new Long("767660573299449856"));
-        List<Long> expected = Arrays.asList(new Long("516478373"), new Long("1710537350"), new Long("767660573299449856"));
-        exerciseGetFriendsAndVerify(followers, friends, expected);
+    public void test_getUsersConnected_calledWithSomeBidirectionRelationShip_returnListWithPeopleThatIsMemberOfTwoLists() throws SocialNetWorkWrapperException, QueryException {
+        List<String> followers = Arrays.asList("516478373", "863434009048739840", "1710537350", "92586914", "767660573299449856", "3796287012", "249619704");
+        List<String> friends = Arrays.asList("31676814", "516478373", "4265275695", "1710537350", "767660573299449856");
+        List<String> expected = Arrays.asList("516478373", "1710537350", "767660573299449856");
+        exerciseGetUsersConnectedAndVerify(followers, friends, expected);
     }
 
     @Test(groups = {"unit"}, expectedExceptions = QueryException.class)
-    public void test_getFriends_calledWithInnerWrapperThatThrowsException_throwsQueryException() throws SocialNetWorkWrapperException, QueryException {
+    public void test_getUsersConnected_calledWithInnerWrapperThatThrowsException_throwsQueryException() throws SocialNetWorkWrapperException, QueryException {
         Mockito.when(wrapperStub.getFollowersScreenName(testUserHandle)).thenThrow(SocialNetWorkWrapperException.class);
-        sut.getFriends(testUserHandle);
+        sut.getUsersConnected(testUserHandle);
     }
 
-    private void exerciseGetFriendsAndVerify(List<Long> followers, List<Long> friends, List<Long> expected) throws QueryException, SocialNetWorkWrapperException {
+    private void exerciseGetUsersConnectedAndVerify(List<String> followers, List<String> friends, List<String> expected) throws QueryException, SocialNetWorkWrapperException {
         Mockito.when(wrapperStub.getFollowersScreenName(testUserHandle)).thenReturn(followers);
         Mockito.when(wrapperStub.getFriendsScreenName(testUserHandle)).thenReturn(friends);
-        List<Long> actual = sut.getFriends(testUserHandle);
+        List<String> actual = sut.getUsersConnected(testUserHandle);
         Assert.assertEquals(actual, expected);
     }
 }

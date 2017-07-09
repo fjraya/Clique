@@ -29,6 +29,7 @@ class FollowersAssociationStrategy extends BaseAssociationStrategy {
         super(twitter);
     }
     public IDs getRelatedUsers(String userHandle, long cursor) throws TwitterException {
+        twitter.getFollowersIDs()
         return twitter.getFollowersIDs(userHandle, cursor);
     }
 }
@@ -61,24 +62,24 @@ public class TwitterSocialNetworkWrapper implements SocialNetworkWrapper {
         TwitterFactory tf = new TwitterFactory(cb.build());
         twitter = tf.getInstance();
     }
-    public List<Long> getFollowersScreenName(String userHandle) throws SocialNetWorkWrapperException {
+    public List<String> getFollowersScreenName(String userHandle) throws SocialNetWorkWrapperException {
         return getRelatedUsers(userHandle, new FollowersAssociationStrategy(twitter));
     }
 
 
-    public List<Long> getFriendsScreenName(String userHandle) throws SocialNetWorkWrapperException {
+    public List<String> getFriendsScreenName(String userHandle) throws SocialNetWorkWrapperException {
         return getRelatedUsers(userHandle, new FriendsAssociationStrategy(twitter));
     }
 
-    private List<Long> getRelatedUsers(String userHandle, AssociationStrategy relation) throws SocialNetWorkWrapperException {
+    private List<String> getRelatedUsers(String userHandle, AssociationStrategy relation) throws SocialNetWorkWrapperException {
         long cursor = -1;
         IDs ids;
-        List<Long> result = new ArrayList<Long>();
+        List<String> result = new ArrayList<String>();
         try {
             do {
                 ids = relation.getRelatedUsers(userHandle, cursor);
                 for (long id : ids.getIDs()) {
-                    result.add(new Long(id));
+                    result.add(String.valueOf(id));
                 }
             } while ((cursor = ids.getNextCursor()) != 0);
         }
