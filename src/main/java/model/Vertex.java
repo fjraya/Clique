@@ -33,4 +33,13 @@ public class Vertex {
         return result.toString();
     }
 
+    public List<String> getNeighboursAsArray()
+    {
+        return this.neighbours;
+    }
+
+    public int getDegree() {
+        return neighbours.size();
+    }
+
 }

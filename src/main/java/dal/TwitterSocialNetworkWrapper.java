@@ -12,11 +12,12 @@ import java.util.List;
 
 
 interface AssociationStrategy {
-    IDs getRelatedUsers(String userHandle, long cursor) throws TwitterException;
+    PagableResponseList<User> getRelatedUsers(String userHandle, long cursor) throws TwitterException;
 }
 
 abstract class BaseAssociationStrategy implements AssociationStrategy {
     protected Twitter twitter;
+
     public BaseAssociationStrategy(Twitter twitter) {
         this.twitter = twitter;
     }
@@ -28,9 +29,9 @@ class FollowersAssociationStrategy extends BaseAssociationStrategy {
     public FollowersAssociationStrategy(Twitter twitter) {
         super(twitter);
     }
-    public IDs getRelatedUsers(String userHandle, long cursor) throws TwitterException {
-        twitter.getFollowersIDs()
-        return twitter.getFollowersIDs(userHandle, cursor);
+
+    public PagableResponseList<User> getRelatedUsers(String userHandle, long cursor) throws TwitterException {
+        return twitter.getFollowersList(userHandle, cursor);
     }
 }
 
@@ -39,8 +40,9 @@ class FriendsAssociationStrategy extends BaseAssociationStrategy {
     public FriendsAssociationStrategy(Twitter twitter) {
         super(twitter);
     }
-    public IDs getRelatedUsers(String userHandle, long cursor) throws TwitterException {
-        return twitter.getFriendsIDs(userHandle, cursor);
+
+    public PagableResponseList<User> getRelatedUsers(String userHandle, long cursor) throws TwitterException {
+        return twitter.getFriendsList(userHandle, -1);
     }
 }
 
@@ -62,6 +64,7 @@ public class TwitterSocialNetworkWrapper implements SocialNetworkWrapper {
         TwitterFactory tf = new TwitterFactory(cb.build());
         twitter = tf.getInstance();
     }
+
     public List<String> getFollowersScreenName(String userHandle) throws SocialNetWorkWrapperException {
         return getRelatedUsers(userHandle, new FollowersAssociationStrategy(twitter));
     }
@@ -72,20 +75,17 @@ public class TwitterSocialNetworkWrapper implements SocialNetworkWrapper {
     }
 
     private List<String> getRelatedUsers(String userHandle, AssociationStrategy relation) throws SocialNetWorkWrapperException {
-        long cursor = -1;
-        IDs ids;
-        List<String> result = new ArrayList<String>();
         try {
-            do {
-                ids = relation.getRelatedUsers(userHandle, cursor);
-                for (long id : ids.getIDs()) {
-                    result.add(String.valueOf(id));
-                }
-            } while ((cursor = ids.getNextCursor()) != 0);
-        }
-        catch(TwitterException e) {
+            long cursor = -1;
+            List<String> userHandles = new ArrayList<>();
+            PagableResponseList<User> users = relation.getRelatedUsers(userHandle, cursor);
+            for (User user : users) {
+                userHandles.add(user.getScreenName());
+            }
+            return userHandles;
+        } catch (TwitterException e) {
             throw new SocialNetWorkWrapperException(e.getMessage());
         }
-        return result;
+
     }
 }

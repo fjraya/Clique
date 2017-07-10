@@ -1,4 +1,4 @@
-import dal.FriendsRepository;
+import dal.TwitterFriendsRepository;
 import dal.QueryException;
 import dal.SocialNetWorkWrapperException;
 import dal.SocialNetworkWrapper;
@@ -11,20 +11,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-
 /**
  * Created by franciscoraya on 6/7/17.
  */
-public class FriendsRepositoryUnitTest {
-    private FriendsRepository sut;
+public class TwitterFriendsRepositoryUnitTest {
+    private TwitterFriendsRepository sut;
     private SocialNetworkWrapper wrapperStub;
     private String testUserHandle = "soyelrayan";
     @BeforeMethod
     public void setUp()
     {
         wrapperStub = Mockito.mock(SocialNetworkWrapper.class);
-        sut = new FriendsRepository(wrapperStub);
+        sut = new TwitterFriendsRepository(wrapperStub);
     }
 
     @Test(groups = {"unit"})
