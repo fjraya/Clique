@@ -15,23 +15,13 @@ public class Vertex {
         this.neighbours = neighbours;
     }
 
-    public void addNeighbour(String name)
-    {
-        this.neighbours.add(name);
-    }
+
 
     public String getName() {
         return name;
     }
 
-    public String getNeighbours()
-    {
-        StringBuilder result =  new StringBuilder("");
-        for (String nie: neighbours) {
-            result.append(nie + ",");
-        }
-        return result.toString();
-    }
+
 
     public List<String> getNeighboursAsArray()
     {

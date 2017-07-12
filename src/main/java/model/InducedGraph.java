@@ -1,11 +1,6 @@
 package model;
 
-import services.InducedGraphService;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by franciscoraya on 9/7/17.
@@ -23,19 +18,18 @@ public class InducedGraph {
     }
 
 
-
     public boolean isClique() {
         Set<String> vertexNames = vertexs.keySet();
         int minDegree = 99999;
         int maxDegree = -9999;
         int nNodes = 0;
-        for(String vertexName: vertexNames) {
+        for (String vertexName : vertexNames) {
             int degree = vertexs.get(vertexName).getDegree();
             if (degree > maxDegree) maxDegree = degree;
             if (degree < minDegree) minDegree = degree;
-            nNodes ++;
+            nNodes++;
         }
-        return (maxDegree == minDegree) && ((nNodes == maxDegree +1)||(nNodes == 1));
+        return (maxDegree == minDegree) && ((nNodes == maxDegree + 1) || (nNodes == 1));
     }
 
 
@@ -43,7 +37,7 @@ public class InducedGraph {
         Set<String> vertexNames = vertexs.keySet();
         int minDegree = 99999;
         String minimumVertexName = "";
-        for(String vertexName: vertexNames) {
+        for (String vertexName : vertexNames) {
             int degree = vertexs.get(vertexName).getDegree();
             if (degree < minDegree) {
                 minDegree = degree;
@@ -77,8 +71,7 @@ public class InducedGraph {
         if (graph.isClique()) {
             anchor.addAll(cand);
             cliques.add(anchor);
-        }
-        else {
+        } else {
             while (!graph.isClique()) {
                 List<String> newAnchor = new ArrayList<>(anchor);
                 List<String> newCand = new ArrayList<>(cand);
@@ -97,9 +90,9 @@ public class InducedGraph {
         }
     }
 
-    private  InducedGraph fromVertexArray(List<String> vertexs) {
+    private InducedGraph fromVertexArray(List<String> vertexs) {
         InducedGraph graph = new InducedGraph();
-        for (String vertex: vertexs) {
+        for (String vertex : vertexs) {
             Vertex node = this.getVertex(vertex);
             List<String> neighbours = new ArrayList<>(node.getNeighboursAsArray());
             neighbours.retainAll(vertexs);

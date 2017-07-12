@@ -3,14 +3,12 @@ import mothers.InducedGraphMother;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import services.InducedGraphService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by franciscoraya on 10/7/17.
@@ -34,7 +32,8 @@ public class InducedGraphUnitTest {
     @DataProvider(name = "getGraphDataProvider")
     public Object[][] getGraphDataProvider() {
         return new Object[][]{{InducedGraphMother.getTestInstance(), new ArrayList<>(Arrays.asList("s01", "s02", "s03", "s04", "s05"))},
-                {InducedGraphMother.getOneNodeInstance(), new ArrayList<>(Arrays.asList("s01"))}
+                {InducedGraphMother.getOneNodeInstance(), new ArrayList<>(Arrays.asList("s01"))},
+                {InducedGraphMother.getTestInstance(), new ArrayList<>(Arrays.asList("s01", "s02", "s03", "s04", "s05"))}
         };
     }
 

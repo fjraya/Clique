@@ -1,10 +1,8 @@
 package dal;
 
-import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.User;
+import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.OrganizationService;
-import org.eclipse.egit.github.core.service.RepositoryService;
-import org.eclipse.egit.github.core.service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,14 +15,20 @@ import java.util.Set;
  */
 public class GithubFriendsRepository implements FriendsRepository {
     private OrganizationService organizationService;
+    private String token = "f5809a0a5043bba90930242aade90b80992989bc";
+
 
     public GithubFriendsRepository() {
-        this(new OrganizationService());
+        GitHubClient client = new GitHubClient();
+        client.setOAuth2Token(token);
+        this.organizationService = new OrganizationService(client);
     }
+
 
     public GithubFriendsRepository(OrganizationService organizationService) {
         this.organizationService = organizationService;
     }
+
     public List<String> getUsersConnected(String userHandle) throws QueryException {
         try {
             List<User> organizations = organizationService.getOrganizations(userHandle);

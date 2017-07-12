@@ -22,6 +22,7 @@ public class FriendsRepositoryImpl implements FriendsRepository {
     @Override
     public List<String> getUsersConnected(String userHandle) throws QueryException {
         List<String> users = new ArrayList<>();
+
         for (FriendsRepository friendsRepository: friendsRepositories) {
             List<String> usersConnected = friendsRepository.getUsersConnected(userHandle);
             if (usersConnected.size() == 0) return usersConnected;
