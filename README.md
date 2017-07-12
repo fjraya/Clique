@@ -24,3 +24,6 @@ java -jar clique-1.0-SNAPSHOT-jar-with-dependencies.jar <filename>
 Para ejecutar los tests, ir al directorio raíz del proyecto y ejecutar:
 
 mvn test
+
+
+Hay muchos problemas por el Rate Limit de las apis de twitter y github. 
