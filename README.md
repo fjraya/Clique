@@ -2,9 +2,11 @@
 
 Para ejecutar necesitamos crear un archivo de texto donde haya un usuario por linea, ejemplo:
 
-user1\n
-user2\n
-user3\n
+user1
+
+user2
+
+user3
 
 
 Teniendo maven instalado, para compilar el proyecto una vez clonado de git, tenemos que irnos al directorio raz y ejecutar:
