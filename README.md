@@ -26,4 +26,10 @@ Para ejecutar los tests, ir al directorio raíz del proyecto y ejecutar:
 mvn test
 
 
-Hay muchos problemas por el Rate Limit de las apis de twitter y github. 
+# Notas
+
+1. Hay muchos problemas por el Rate Limit de las apis de twitter y github. 
+
+2. He utilizado el framework Akka que implementa el modelo de actores para solucionar el problema de forma paralela/concurrente
+
+3.- Hay una muestra de test unitarios para que os hagais una idea de mi manejo. 
