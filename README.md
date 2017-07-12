@@ -9,9 +9,12 @@ user2
 user3
 
 
-Teniendo maven instalado, para compilar el proyecto una vez clonado de git, tenemos que irnos al directorio raz y ejecutar:
+Teniendo maven instalado, para compilar el proyecto una vez clonado de git, tenemos que irnos al directorio raíz y ejecutar:
+
 
 mvn assembly:assembly
+
+
 
 Esto creará un .jar autocontenido en el directorio "target". Lo podremos ejecutar con:
 
